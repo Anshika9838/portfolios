@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anshika • Digital Artisan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600&amp;display=swap');
+        
+        :root {
+            --primary: 139 92 246;
+        }
+        
+        .tail-container {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+        
+        .logo-font {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .hero-bg {
+            background: radial-gradient(at center bottom, rgb(30 27 75), rgb(15 23 42));
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(12px);
+        }
+
+        .section-header {
+            position: relative;
+        }
+        
+        .section-header:after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(to right, rgb(139 92 246), rgb(236 72 153));
+            bottom: -8px;
+            left: 0;
+            border-radius: 9999px;
+        }
+
+        .nav-link {
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: rgb(167 139 250);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover:after {
+            width: 100%;
+        }
+
+        .project-card {
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-16px) scale(1.03);
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4);
+        }
+
+        .skill-pill {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .skill-pill:hover {
+            transform: translateY(-4px) scale(1.1);
+            box-shadow: 0 10px 15px -3px rgb(139 92 246 / 0.3);
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .terminal-line {
+            animation: typing 1.5s steps(30, end) forwards;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .avatar-glow {
+            box-shadow: 0 0 60px -10px rgb(167 139 250),
+                        0 0 30px -10px rgb(236 72 153);
+        }
+
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(to right, rgb(139 92 246), rgb(236 72 153));
+            z-index: 50;
+        }
+    </style>
+</head>
+<body class="tail-container bg-zinc-950 text-zinc-200 overflow-x-hidden">
+    <!-- progress bar -->
+    <div id="progress-bar" class="scroll-progress w-0"></div>
+
+    <!-- NAVBAR -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass border-b border-white/10">
+        <div class="max-w-screen-2xl mx-auto px-8 py-5 flex items-center justify-between">
+            <!-- logo -->
+            <div onclick="window.scrollTo({top: 0, behavior: 'smooth'})" 
+                 class="flex items-center gap-x-3 cursor-pointer group">
+                <div class="w-7 h-7 bg-violet-500 rounded-2xl flex items-center justify-center text-white text-xs font-bold logo-font group-active:scale-90 transition-transform">A</div>
+                <span class="text-2xl tracking-tighter logo-font font-semibold text-white">anshika.</span>
+            </div>
+
+            <!-- desktop nav -->
+            <div class="hidden md:flex items-center gap-x-8 text-sm font-medium">
+                <a href="#about" onclick="navigateTo('about')" class="nav-link text-zinc-400 hover:text-white">About</a>
+                <a href="#skills" onclick="navigateTo('skills')" class="nav-link text-zinc-400 hover:text-white">Skills</a>
+                <a href="#projects" onclick="navigateTo('projects')" class="nav-link text-zinc-400 hover:text-white">Projects</a>
+                <a href="#journey" onclick="navigateTo('journey')" class="nav-link text-zinc-400 hover:text-white">Journey</a>
+            </div>
+
+            <div class="flex items-center gap-x-4">
+                <a href="https://github.com/Anshika9838" target="_blank" 
+                   class="w-9 h-9 flex items-center justify-center rounded-2xl hover:bg-white/10 transition-colors">
+                    <i class="fa-brands fa-github text-xl"></i>
+                </a>
+                <button onclick="copyEmail()" 
+                        class="px-6 py-2.5 bg-white text-zinc-900 hover:bg-amber-300 transition-all rounded-3xl text-sm font-semibold flex items-center gap-x-2">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    <span>Contact</span>
+                </button>
+                
+                <!-- mobile menu -->
+                <button onclick="toggleMobileMenu()" id="mobile-menu-btn"
+                        class="md:hidden w-9 h-9 flex items-center justify-center rounded-2xl hover:bg-white/10 transition-colors">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- MOBILE MENU -->
+        <div id="mobile-menu" class="hidden md:hidden fixed inset-0 bg-zinc-950 z-40 pt-20 px-8">
+            <div class="flex flex-col gap-y-6 text-xl font-medium">
+                <a href="#about" onclick="navigateTo('about');toggleMobileMenu()" class="py-2 border-b border-white/10">About</a>
+                <a href="#skills" onclick="navigateTo('skills');toggleMobileMenu()" class="py-2 border-b border-white/10">Skills</a>
+                <a href="#projects" onclick="navigateTo('projects');toggleMobileMenu()" class="py-2 border-b border-white/10">Projects</a>
+                <a href="#journey" onclick="navigateTo('journey');toggleMobileMenu()" class="py-2 border-b border-white/10">Journey</a>
+                
+                <div class="pt-6">
+                    <a href="https://github.com/Anshika9838" target="_blank"
+                       class="flex items-center justify-center gap-x-3 bg-white/5 hover:bg-white/10 py-6 rounded-3xl transition-colors">
+                        <i class="fa-brands fa-github text-3xl"></i>
+                        <div>
+                            <div class="font-semibold">GitHub</div>
+                            <div class="text-xs text-zinc-400">@Anshika9838</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header class="hero-bg min-h-screen flex items-center relative">
+        <div class="absolute inset-0 bg-[radial-gradient(#4f46e510_1px,transparent_1px)] [background-size:50px_50px] opacity-30"></div>
+        
+        <div class="max-w-screen-2xl mx-auto px-8 pt-20 grid md:grid-cols-12 gap-12 items-center">
+            <!-- left content -->
+            <div class="md:col-span-7 z-10">
+                <div class="inline-flex items-center gap-x-2 bg-white/5 text-white text-xs font-medium tracking-widest px-5 h-7 rounded-3xl mb-6 border border-white/10">
+                    <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                    AVAILABLE FOR FREELANCE
+                </div>
+                
+                <h1 class="text-7xl md:text-8xl font-semibold tracking-tighter leading-none logo-font mb-2">
+                    Hi, I'm <span class="bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-fuchsia-400">Anshika</span>
+                </h1>
+                
+                <div class="flex items-center gap-x-3 mb-6">
+                    <div class="h-px w-12 bg-gradient-to-r from-transparent via-violet-400 to-transparent"></div>
+                    <p class="text-2xl text-violet-300 font-light tracking-wide">digital artisan &amp; code poet</p>
+                </div>
+                
+                <p class="max-w-md text-lg text-zinc-400 mb-10">
+                    Crafting immersive web experiences with a blend of elegant code and thoughtful design. 
+                    Currently building the future one pixel at a time.
+                </p>
+                
+                <div class="flex items-center gap-x-4">
+                    <button onclick="document.getElementById('projects').scrollIntoView({ behavior: 'smooth' })" 
+                            class="px-8 py-6 bg-white text-zinc-900 rounded-3xl font-semibold flex items-center gap-x-3 hover:shadow-2xl hover:shadow-violet-500/30 transition-all group">
+                        <span>Explore my work</span>
+                        <i class="fa-solid fa-arrow-right group-active:rotate-45 transition-transform"></i>
+                    </button>
+                    
+                    <button onclick="window.open('https://github.com/Anshika9838', '_blank')" 
+                            class="px-8 py-6 border border-white/30 hover:border-white/70 rounded-3xl font-medium flex items-center gap-x-3 transition-all">
+                        <i class="fa-brands fa-github"></i>
+                        <span>Github</span>
+                    </button>
+                </div>
+                
+                <!-- trust signals -->
+                <div class="flex items-center gap-x-8 mt-16 text-xs">
+                    <div class="flex -space-x-4">
+                        <div class="w-6 h-6 bg-zinc-800 border border-zinc-700 rounded-2xl flex items-center justify-center text-[10px]">JS</div>
+                        <div class="w-6 h-6 bg-zinc-800 border border-zinc-700 rounded-2xl flex items-center justify-center text-[10px]">R</div>
+                    </div>
+                    <div>
+                        <div class="font-mono text-emerald-400">15+</div>
+                        <div class="text-zinc-500 text-xs">Repositories</div>
+                    </div>
+                    <div class="h-8 w-px bg-white/10"></div>
+                    <div class="text-zinc-400 text-sm flex items-center gap-x-1">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>India</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- right visual -->
+            <div class="md:col-span-5 relative flex justify-center">
+                <div class="relative">
+                    <!-- main avatar -->
+                    <div class="w-80 h-80 md:w-96 md:h-96 rounded-[4rem] overflow-hidden border-8 border-zinc-900 avatar-glow">
+                        <img id="avatar-img" 
+                             src="https://avatars.githubusercontent.com/Anshika9838" 
+                             alt="Anshika"
+                             class="w-full h-full object-cover grayscale-[0.4] hover:grayscale-0 transition-all duration-700">
+                    </div>
+                    
+                    <!-- floating badges -->
+                    <div class="absolute -top-6 -left-6 glass border border-white/10 rounded-3xl px-5 py-3 text-sm flex items-center gap-x-3 shadow-2xl floating" style="animation-delay: 0s">
+                        <i class="fa-solid fa-code text-violet-400"></i>
+                        <div>
+                            <div class="text-xs text-zinc-400">Current focus</div>
+                            <div class="font-medium text-white">UI Systems</div>
+                        </div>
+                    </div>
+                    
+                    <div class="absolute -bottom-4 -right-8 glass border border-white/10 rounded-3xl px-6 py-4 shadow-2xl floating" style="animation-delay: 1.2s">
+                        <div class="flex items-center gap-x-2">
+                            <div class="flex">
+                                <div class="text-amber-400">★</div>
+                                <div class="text-amber-400">★</div>
+                                <div class="text-amber-400">★</div>
+                            </div>
+                            <div class="text-xs leading-none">
+                                <div class="font-semibold">4.9</div>
+                                <div class="text-zinc-500">avg rating</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- code snippet -->
+                    <div class="absolute top-1/3 -right-12 hidden lg:block glass border border-white/10 rounded-3xl p-4 w-52 shadow-2xl">
+                        <div class="font-mono text-[10px] text-emerald-300 mb-2">main.jsx</div>
+                        <div class="text-violet-300 text-xs leading-relaxed font-light">
+                            &lt;Hero /&gt;<br>
+                            &lt;Craft /&gt;<br>
+                            <span class="text-amber-300">export default</span> Anshika
+                        </div>
+                    </div>
+                    
+                    <!-- orbiting icons -->
+                    <div class="absolute top-12 -left-8 w-11 h-11 bg-white/5 border border-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center text-xl rotate-12 floating" style="animation-delay: 2.3s">
+                        ⚡
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- scroll indicator -->
+        <div class="absolute bottom-10 left-1/2 flex flex-col items-center gap-y-2">
+            <div class="text-[10px] font-mono tracking-[2px] text-zinc-500">SCROLL TO EXPLORE</div>
+            <div class="w-px h-12 bg-gradient-to-b from-transparent via-zinc-400 to-transparent"></div>
+        </div>
+        
+        <!-- github banner -->
+        <div onclick="window.open('https://github.com/Anshika9838', '_blank')" 
+             class="absolute bottom-8 right-8 glass text-xs px-4 h-9 rounded-3xl border border-white/10 flex items-center gap-x-2 cursor-pointer hover:border-violet-300 transition-colors">
+            <i class="fa-brands fa-github"></i>
+            <span class="font-medium">@Anshika9838</span>
+        </div>
+    </header>
+
+    <!-- ABOUT -->
+    <section id="about" class="py-28 border-t border-white/5">
+        <div class="max-w-screen-2xl mx-auto px-8">
+            <div class="grid md:grid-cols-12 gap-20 items-center">
+                <!-- text -->
+                <div class="md:col-span-7">
+                    <div class="section-header">
+                        <span class="uppercase text-xs tracking-widest font-medium text-violet-400">Chapter 01 • The origin</span>
+                        <h2 class="text-6xl tracking-tighter font-semibold mt-3 leading-none">About me</h2>
+                    </div>
+                    
+                    <div class="prose prose-invert mt-10 text-zinc-300 max-w-none">
+                        <p class="text-xl leading-relaxed">
+                            Hello! I'm Anshika, a passionate self-taught developer with an obsession for creating 
+                            delightful interfaces that feel alive. My journey began with simple HTML pages and has evolved 
+                            into full digital experiences.
+                        </p>
+                        <p class="text-xl leading-relaxed mt-6">
+                            When I'm not coding, you'll find me exploring new design systems, contributing to open source, 
+                            or capturing moments through my lens. I believe every project should tell a story.
+                        </p>
+                    </div>
+                    
+                    <div class="mt-16 grid grid-cols-3 gap-6">
+                        <div>
+                            <div class="text-emerald-400 font-mono text-4xl font-semibold">15</div>
+                            <div class="text-xs text-zinc-400 tracking-wider">PROJECTS COMPLETED</div>
+                        </div>
+                        <div>
+                            <div class="text-emerald-400 font-mono text-4xl font-semibold">8</div>
+                            <div class="text-xs text-zinc-400 tracking-wider">TECHNOLOGIES MASTERED</div>
+                        </div>
+                        <div>
+                            <div class="text-emerald-400 font-mono text-4xl font-semibold">∞</div>
+                            <div class="text-xs text-zinc-400 tracking-wider">CUPS OF COFFEE</div>
+                        </div>
+                    </div>
+                    
+                    <!-- personal values -->
+                    <div class="mt-20 flex flex-wrap gap-3">
+                        <div class="text-xs px-5 py-3 bg-white/5 rounded-3xl border border-white/10">✦ Curiosity driven</div>
+                        <div class="text-xs px-5 py-3 bg-white/5 rounded-3xl border border-white/10">✦ Pixel perfect</div>
+                        <div class="text-xs px-5 py-3 bg-white/5 rounded-3xl border border-white/10">✦ User obsessed</div>
+                        <div class="text-xs px-5 py-3 bg-white/5 rounded-3xl border border-white/10">✦ Always learning</div>
+                    </div>
+                </div>
+                
+                <!-- visual panel -->
+                <div class="md:col-span-5">
+                    <div class="glass border border-white/10 rounded-3xl p-8">
+                        <div class="bg-zinc-900 rounded-2xl p-6 mb-8">
+                            <div class="flex justify-between items-center mb-6">
+                                <div class="flex items-center gap-x-2">
+                                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
+                                    <div class="w-3 h-3 bg-amber-400 rounded-full"></div>
+                                    <div class="w-3 h-3 bg-emerald-400 rounded-full"></div>
+                                </div>
+                                <div class="text-zinc-500 text-xs font-mono">anshika.dev</div>
+                            </div>
+                            
+                            <div class="space-y-6 text-xs">
+                                <div class="flex gap-4">
+                                    <div class="font-medium w-28 text-zinc-400">Currently listening</div>
+                                    <div class="flex-1 text-violet-300">lofi beats to code/relax to</div>
+                                </div>
+                                <div class="flex gap-4">
+                                    <div class="font-medium w-28 text-zinc-400">Favorite stack</div>
+                                    <div class="flex-1 text-violet-300">React • Tailwind • Framer</div>
+                                </div>
+                                <div class="flex gap-4">
+                                    <div class="font-medium w-28 text-zinc-400">Dream project</div>
+                                    <div class="flex-1 text-rose-300">An interactive 3D portfolio for everyone</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div onclick="window.location.href='https://github.com/Anshika9838'" 
+                             class="flex items-center justify-between group cursor-pointer">
+                            <div class="flex items-center gap-x-4">
+                                <img src="https://avatars.githubusercontent.com/Anshika9838" 
+                                     class="w-10 h-10 rounded-2xl" alt="">
+                                <div>
+                                    <div class="text-sm font-medium group-hover:text-violet-300 transition-colors">@Anshika9838</div>
+                                    <div class="text-emerald-400 text-xs font-mono">GitHub • 2024</div>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-zinc-400 group-hover:text-white transition-colors"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="py-28 bg-black">
+        <div class="max-w-screen-2xl mx-auto px-8">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16">
+                <div>
+                    <span class="uppercase text-xs tracking-widest font-medium text-fuchsia-400">Chapter 02 • Arsenal</span>
+                    <h2 class="text-6xl tracking-tighter font-semibold mt-3">Skills &amp; tools</h2>
+                </div>
+                <a href="https://github.com/Anshika9838" target="_blank" 
+                   class="hidden md:flex items-center text-xs gap-x-3 group">
+                    <span class="group-hover:underline">VIEW ALL ON GITHUB</span>
+                    <div class="w-8 h-px bg-white"></div>
+                </a>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- skill 1 -->
+                <div class="skill-pill bg-zinc-900 hover:bg-zinc-800 border border-white/5 p-6 rounded-3xl">
+                    <div class="flex justify-between">
+                        <div class="text-4xl mb-6">🌐</div>
+                        <div class="text-right">
+                            <span class="block text-xs font-mono text-teal-400">EXPERT</span>
+                        </div>
+                    </div>
+                    <div class="font-semibold text-xl">Frontend Craft</div>
+                    <div class="text-zinc-400 text-sm mt-1">HTML • CSS • JavaScript • React</div>
+                    <div class="h-2 bg-zinc-800 rounded-3xl mt-8 overflow-hidden">
+                        <div class="h-2 w-[92%] bg-gradient-to-r from-teal-400 to-cyan-400 rounded-3xl"></div>
+                    </div>
+                </div>
+                
+                <!-- skill 2 -->
+                <div class="skill-pill bg-zinc-900 hover:bg-zinc-800 border border-white/5 p-6 rounded-3xl">
+                    <div class="flex justify-between">
+                        <div class="text-4xl mb-6">🎨</div>
+                        <div class="text-right">
+                            <span class="block text-xs font-mono text-pink-400">ADVANCED</span>
+                        </div>
+                    </div>
+                    <div class="font-semibold text-xl">Design Systems</div>
+                    <div class="text-zinc-400 text-sm mt-1">Tailwind • Figma • Framer Motion</div>
+                    <div class="h-2 bg-zinc-800 rounded-3xl mt-8 overflow-hidden">
+                        <div class="h-2 w-[85%] bg-gradient-to-r from-pink-400 to-rose-400 rounded-3xl"></div>
+                    </div>
+                </div>
+                
+                <!-- skill 3 -->
+                <div class="skill-pill bg-zinc-900 hover:bg-zinc-800 border border-white/5 p-6 rounded-3xl">
+                    <div class="flex justify-between">
+                        <div class="text-4xl mb-6">🔧</div>
+                        <div class="text-right">
+                            <span class="block text-xs font-mono text-amber-400">INTERMEDIATE</span>
+                        </div>
+                    </div>
+                    <div class="font-semibold text-xl">Backend &amp; DevOps</div>
+                    <div class="text-zinc-400 text-sm mt-1">Node • Express • Git • Vercel</div>
+                    <div class="h-2 bg-zinc-800 rounded-3xl mt-8 overflow-hidden">
+                        <div class="h-2 w-[70%] bg-gradient-to-r from-amber-400 to-yellow-400 rounded-3xl"></div>
+                    </div>
+                </div>
+                
+                <!-- skill 4 -->
+                <div class="skill-pill bg-zinc-900 hover:bg-zinc-800 border border-white/5 p-6 rounded-3xl">
+                    <div class="flex justify-between">
+                        <div class="text-4xl mb-6">📊</div>
+                        <div class="text-right">
+                            <span class="block text-xs font-mono text-purple-400">EXPLORING</span>
+                        </div>
+                    </div>
+                    <div class="font-semibold text-xl">AI &amp; Emerging</div>
+                    <div class="text-zinc-400 text-sm mt-1">Python • TensorFlow basics</div>
+                    <div class="h-2 bg-zinc-800 rounded-3xl mt-8 overflow-hidden">
+                        <div class="h-2 w-[45%] bg-gradient-to-r from-purple-400 to-violet-400 rounded-3xl"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- tech logos -->
+            <div class="mt-24">
+                <p class="text-center text-xs tracking-widest text-zinc-500 mb-8">TECHNOLOGIES I ❤️ WORKING WITH</p>
+                <div class="flex flex-wrap justify-center gap-x-10 gap-y-8 opacity-75">
+                    <div class="flex flex-col items-center gap-y-1 text-xs">
+                        <i class="fa-brands fa-react text-4xl text-cyan-400"></i>
+                        <span>React</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-y-1 text-xs">
+                        <i class="fa-brands fa-js text-4xl text-yellow-400"></i>
+                        <span>JavaScript</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-y-1 text-xs">
+                        <i class="fa-brands fa-tailwind text-4xl text-sky-400"></i>
+                        <span>Tailwind</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-y-1 text-xs">
+                        <span class="text-4xl font-black text-red-500">N</span>
+                        <span>Next.js</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-y-1 text-xs">
+                        <i class="fa-brands fa-node-js text-4xl text-emerald-400"></i>
+                        <span>Node</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-y-1 text-xs">
+                        <span class="text-4xl font-bold text-purple-400">F</span>
+                        <span>Figma</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="py-28">
+        <div class="max-w-screen-2xl mx-auto px-8">
+            <div class="flex justify-between items-baseline mb-12">
+                <div class="section-header">
+                    <span class="uppercase text-xs tracking-widest font-medium text-sky-400">Chapter 03 • Creations</span>
+                    <h2 class="text-6xl tracking-tighter font-semibold mt-3">Featured projects</h2>
+                </div>
+                <button onclick="window.open('https://github.com/Anshika9838?tab=repositories', '_blank')" 
+                        class="text-sm flex items-center gap-x-2 hover:text-violet-300 transition-colors">
+                    ALL REPOS 
+                    <span class="text-lg leading-none">→</span>
+                </button>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- project 1 -->
+                <div onclick="showProjectDetail(1)" class="project-card cursor-pointer bg-zinc-900 border border-white/10 rounded-3xl overflow-hidden">
+                    <div class="h-60 bg-zinc-800 relative">
+                        <img src="https://picsum.photos/id/1015/600/400" 
+                             class="w-full h-full object-cover" alt="Project 1">
+                        <div class="absolute top-4 left-4 bg-black/70 text-xs px-3 py-1 rounded-3xl flex items-center">
+                            <span class="text-lime-400">●</span>
+                            <span class="ml-1.5">LIVE</span>
+                        </div>
+                    </div>
+                    <div class="p-7">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <div class="font-semibold text-xl">EchoNotes</div>
+                                <div class="text-zinc-400 text-sm">Voice-first note taking app</div>
+                            </div>
+                            <div class="text-[10px] font-mono bg-white/10 px-3 py-2 rounded-2xl text-center leading-none">
+                                2024
+                            </div>
+                        </div>
+                        <div class="flex gap-2 mt-8">
+                            <span class="text-[10px] bg-violet-900/60 text-violet-200 px-4 py-2 rounded-3xl">React</span>
+                            <span class="text-[10px] bg-teal-900/60 text-teal-200 px-4 py-2 rounded-3xl">Web Speech</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- project 2 -->
+                <div onclick="showProjectDetail(2)" class="project-card cursor-pointer bg-zinc-900 border border-white/10 rounded-3xl overflow-hidden">
+                    <div class="h-60 bg-zinc-800 relative">
+                        <img src="https://picsum.photos/id/201/600/400" 
+                             class="w-full h-full object-cover" alt="Project 2">
+                    </div>
+                    <div class="p-7">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <div class="font-semibold text-xl">PaletteCraft</div>
+                                <div class="text-zinc-400 text-sm">AI powered color explorer</div>
+                            </div>
+                            <div class="text-[10px] font-mono bg-white/10 px-3 py-2 rounded-2xl text-center leading-none">
+                                2024
+                            </div>
+                        </div>
+                        <div class="flex gap-2 mt-8">
+                            <span class="text-[10px] bg-rose-900/60 text-rose-200 px-4 py-2 rounded-3xl">Tailwind</span>
+                            <span class="text-[10px] bg-sky-900/60 text-sky-200 px-4 py-2 rounded-3xl">OpenAI</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- project 3 -->
+                <div onclick="showProjectDetail(3)" class="project-card cursor-pointer bg-zinc-900 border border-white/10 rounded-3xl overflow-hidden">
+                    <div class="h-60 bg-zinc-800 relative">
+                        <img src="https://picsum.photos/id/251/600/400" 
+                             class="w-full h-full object-cover" alt="Project 3">
+                        <div class="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-violet-600/30"></div>
+                    </div>
+                    <div class="p-7">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <div class="font-semibold text-xl">HabitFlow</div>
+                                <div class="text-zinc-400 text-sm">Beautiful habit tracker</div>
+                            </div>
+                            <div class="text-[10px] font-mono bg-white/10 px-3 py-2 rounded-2xl text-center leading-none">
+                                2023
+                            </div>
+                        </div>
+                        <div class="flex gap-2 mt-8">
+                            <span class="text-[10px] bg-amber-900/60 text-amber-200 px-4 py-2 rounded-3xl">Next.js</span>
+                            <span class="text-[10px] bg-zinc-700 px-4 py-2 rounded-3xl">Supabase</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-16">
+                <button onclick="window.open('https://github.com/Anshika9838', '_blank')" 
+                        class="inline-flex items-center gap-x-4 group">
+                    <span class="text-lg font-light">Discover more on GitHub</span>
+                    <div class="transition-transform group-hover:-rotate-45">
+                        <i class="fa-solid fa-arrow-up-right-from-square text-xl"></i>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- JOURNEY -->
+    <section id="journey" class="py-28 bg-zinc-900">
+        <div class="max-w-screen-2xl mx-auto px-8">
+            <div class="grid md:grid-cols-12 gap-16">
+                <div class="md:col-span-4">
+                    <span class="uppercase text-xs tracking-widest font-medium text-amber-400">Chapter 04 • Timeline</span>
+                    <h2 class="text-6xl tracking-tighter font-semibold mt-4 leading-none">My journey so far</h2>
+                    <p class="mt-6 text-zinc-400">From curiosity to creation</p>
+                    
+                    <div class="mt-16 hidden md:block">
+                        <div class="border-l border-dashed border-zinc-600 pl-8">
+                            <div class="text-xs text-zinc-400">STARTED</div>
+                            <div class="text-4xl font-light text-white/70">2022</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- timeline -->
+                <div class="md:col-span-8">
+                    <div class="space-y-16">
+                        <!-- item -->
+                        <div class="flex gap-8">
+                            <div class="w-28 text-right flex-shrink-0">
+                                <div class="text-emerald-300 text-sm font-medium">JAN 2024</div>
+                                <div class="text-xs text-zinc-500">Present</div>
+                            </div>
+                            <div class="flex-1 border-l border-violet-300 pl-8">
+                                <div class="uppercase text-xs bg-violet-900 w-fit px-4 py-2 rounded-3xl">Current role</div>
+                                <div class="mt-3 font-semibold">Independent Developer</div>
+                                <div class="text-zinc-400">Building personal projects and learning advanced frontend architecture</div>
+                                <div class="mt-6 text-xs flex gap-x-5 text-zinc-400">
+                                    <div class="flex items-center gap-x-2">
+                                        <i class="fa-solid fa-check"></i>
+                                        <span>Published 4 repos</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- item -->
+                        <div class="flex gap-8">
+                            <div class="w-28 text-right flex-shrink-0">
+                                <div class="text-emerald-300 text-sm font-medium">SEP 2023</div>
+                            </div>
+                            <div class="flex-1 border-l border-violet-300 pl-8">
+                                <div class="uppercase text-xs bg-sky-900 w-fit px-4 py-2 rounded-3xl">Hackathon</div>
+                                <div class="mt-3 font-semibold">Won 2nd place • Smart India Hackathon</div>
+                                <div class="text-zinc-400">Developed a campus navigation system using AR elements</div>
+                            </div>
+                        </div>
+                        
+                        <!-- item -->
+                        <div class="flex gap-8">
+                            <div class="w-28 text-right flex-shrink-0">
+                                <div class="text-emerald-300 text-sm font-medium">MAR 2023</div>
+                            </div>
+                            <div class="flex-1 border-l border-violet-300 pl-8">
+                                <div class="uppercase text-xs bg-rose-900 w-fit px-4 py-2 rounded-3xl">First project</div>
+                                <div class="mt-3 font-semibold">Launched personal blog</div>
+                                <div class="text-zinc-400">Built with HTML, CSS and vanilla JS. 300+ visitors in first month</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIAL / FUN FACT -->
+    <div class="py-20 bg-black border-t border-b border-white/10">
+        <div class="max-w-screen-2xl mx-auto px-8">
+            <div class="max-w-2xl mx-auto text-center">
+                <div class="italic text-3xl text-zinc-300">"The best code is invisible. It just feels right."</div>
+                <div class="mt-8 text-xs flex items-center justify-center gap-x-8">
+                    <div class="flex items-center gap-x-3">
+                        <div class="w-px h-3 bg-white"></div>
+                        <span class="uppercase">— Anshika, 2024</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTACT -->
+    <section id="contact" class="py-28">
+        <div class="max-w-screen-2xl mx-auto px-8">
+            <div class="grid md:grid-cols-12 gap-16">
+                <div class="md:col-span-5">
+                    <h2 class="text-6xl font-semibold tracking-tighter">Let's create<br>something beautiful</h2>
+                    <p class="mt-6 text-zinc-400 max-w-xs">Whether it's a new website, collaboration, or just a chat about design systems — I'm all ears.</p>
+                    
+                    <div class="mt-20">
+                        <div class="flex items-center gap-x-6">
+                            <a href="https://github.com/Anshika9838" target="_blank" class="block w-12 h-12 flex items-center justify-center border border-white/30 hover:border-white rounded-2xl text-3xl transition-all">𝕏</a>
+                            <a href="#" class="block w-12 h-12 flex items-center justify-center border border-white/30 hover:border-white rounded-2xl text-3xl transition-all">
+                                <i class="fa-brands fa-linkedin"></i>
+                            </a>
+                        </div>
+                        <div onclick="copyEmail()" class="mt-10 cursor-pointer">
+                            <div class="text-xs text-zinc-400">EMAIL ME</div>
+                            <div id="email-text" class="font-mono text-lg">anshika9838@gmail.com</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- contact form -->
+                <div class="md:col-span-7">
+                    <form id="contact-form" onsubmit="handleSubmit(event)" class="space-y-8">
+                        <div class="grid grid-cols-2 gap-8">
+                            <div>
+                                <label class="block text-xs font-medium mb-3 text-zinc-400">YOUR NAME</label>
+                                <input id="name" type="text" 
+                                       class="w-full bg-transparent border border-white/30 focus:border-white outline-none rounded-3xl px-7 py-7 text-lg"
+                                       placeholder="Alex Rivera">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium mb-3 text-zinc-400">YOUR TITLE</label>
+                                <input id="title" type="text" 
+                                       class="w-full bg-transparent border border-white/30 focus:border-white outline-none rounded-3xl px-7 py-7 text-lg"
+                                       placeholder="Product Designer">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-xs font-medium mb-3 text-zinc-400">MESSAGE</label>
+                            <textarea id="message" rows="6"
+                                      class="w-full bg-transparent border border-white/30 focus:border-white outline-none rounded-3xl px-7 py-7 text-lg resize-none"
+                                      placeholder="Hi Anshika, loved your portfolio..."></textarea>
+                        </div>
+                        
+                        <button type="submit"
+                                class="w-full h-16 bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white font-semibold rounded-3xl text-lg active:scale-95 transition-transform">
+                            SEND MESSAGE
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-black py-16 border-t border-white/10">
+        <div class="max-w-screen-2xl mx-auto px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center gap-x-3">
+                    <div class="w-5 h-5 bg-gradient-to-br from-violet-400 to-pink-400 rounded-xl"></div>
+                    <span class="logo-font text-3xl font-medium">anshika.</span>
+                </div>
+                
+                <div class="text-xs text-zinc-500 mt-6 md:mt-0 text-center md:text-right">
+                    © 2024 Anshika. All pixels reserved.<br>
+                    Handcrafted with love and Tailwind
+                </div>
+                
+                <div class="flex gap-x-6 text-2xl mt-8 md:mt-0">
+                    <a href="https://github.com/Anshika9838" target="_blank" class="hover:text-violet-400 transition-colors"><i class="fa-brands fa-github"></i></a>
+                    <a href="#" class="hover:text-violet-400 transition-colors"><i class="fa-brands fa-x-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- PROJECT MODAL -->
+    <div id="project-modal" class="hidden fixed inset-0 bg-black/90 z-[999] flex items-center justify-center">
+        <div onclick="if(event.target.id === 'project-modal') closeModal()" 
+             class="max-w-2xl w-full mx-4 bg-zinc-900 rounded-3xl overflow-hidden">
+            
+            <!-- modal header -->
+            <div class="px-8 pt-8 pb-6 border-b border-white/10 flex items-center justify-between">
+                <div id="modal-title" class="text-3xl font-semibold">Project name</div>
+                <button onclick="closeModal()" 
+                        class="w-10 h-10 flex items-center justify-center text-3xl leading-none hover:text-violet-400">×</button>
+            </div>
+            
+            <div class="p-8">
+                <div id="modal-image" class="h-64 bg-zinc-800 rounded-3xl mb-8"></div>
+                
+                <div id="modal-description" class="text-zinc-300">
+                    Detailed description goes here. This is where I would describe the project goals, tech used and what I learned.
+                </div>
+                
+                <div class="my-8 flex gap-4" id="modal-tags">
+                    <!-- populated by js -->
+                </div>
+                
+                <div class="flex gap-x-4">
+                    <button onclick="closeModal()" 
+                            class="flex-1 py-7 text-sm font-medium border border-white/30 rounded-3xl">CLOSE</button>
+                    <button onclick="visitGithub()" 
+                            class="flex-1 py-7 bg-white text-zinc-900 text-sm font-semibold rounded-3xl">VISIT REPO</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tailwind script run
+        function initializeTailwind() {
+            // Already initialized via CDN
+        }
+        
+        // Mobile menu
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu')
+            const icon = document.getElementById('mobile-menu-btn')
+            
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden')
+                icon.innerHTML = `<i class="fa-solid fa-xmark text-xl"></i>`
+            } else {
+                menu.classList.add('hidden')
+                icon.innerHTML = `<i class="fa-solid fa-bars text-xl"></i>`
+            }
+        }
+        
+        // Smooth navigation
+        function navigateTo(section) {
+            const el = document.getElementById(section)
+            if (el) {
+                el.scrollIntoView({
+                    behavior: "smooth"
+                })
+            }
+        }
+        
+        // Progress bar
+        function setupProgressBar() {
+            const progressBar = document.getElementById('progress-bar')
+            
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.scrollY
+                const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
+                const scrollPercent = scrollTop / docHeight * 100
+                progressBar.style.width = `${scrollPercent}%`
+            })
+        }
+        
+        // Fake project modal
+        let currentProject = 1
+        
+        function showProjectDetail(id) {
+            currentProject = id
+            const modal = document.getElementById('project-modal')
+            const titleEl = document.getElementById('modal-title')
+            const descEl = document.getElementById('modal-description')
+            const tagsContainer = document.getElementById('modal-tags')
+            const imageContainer = document.getElementById('modal-image')
+            
+            tagsContainer.innerHTML = ''
+            
+            if (id === 1) {
+                titleEl.textContent = "EchoNotes"
+                descEl.innerHTML = `A voice-powered note-taking application that transcribes speech to beautifully formatted notes in real-time. Built to help creators and students capture thoughts faster.`
+                imageContainer.innerHTML = `<img src="https://picsum.photos/id/1015/600/400" class="w-full h-full object-cover rounded-3xl" alt="">`
+                
+                const t1 = document.createElement('div')
+                t1.className = "text-xs bg-teal-900 text-teal-200 px-5 py-3 rounded-3xl"
+                t1.textContent = "Web Speech API"
+                tagsContainer.append(t1)
+                
+                const t2 = document.createElement('div')
+                t2.className = "text-xs bg-indigo-900 text-indigo-200 px-5 py-3 rounded-3xl"
+                t2.textContent = "React"
+                tagsContainer.append(t2)
+            } 
+            else if (id === 2) {
+                titleEl.textContent = "PaletteCraft"
+                descEl.innerHTML = `An experimental color tool that uses AI to generate harmonious palettes based on your mood or reference image. Features export to Tailwind, CSS and Figma.`
+                imageContainer.innerHTML = `<img src="https://picsum.photos/id/201/600/400" class="w-full h-full object-cover rounded-3xl" alt="">`
+                
+                const t1 = document.createElement('div')
+                t1.className = "text-xs bg-pink-900 text-pink-200 px-5 py-3 rounded-3xl"
+                t1.textContent = "HuggingFace"
+                tagsContainer.append(t1)
+                
+                const t2 = document.createElement('div')
+                t2.className = "text-xs bg-amber-900 text-amber-200 px-5 py-3 rounded-3xl"
+                t2.textContent = "Canvas API"
+                tagsContainer.append(t2)
+            } 
+            else if (id === 3) {
+                titleEl.textContent = "HabitFlow"
+                descEl.innerHTML = `Minimalist habit tracker that makes consistency beautiful. Includes streak counters, beautiful charts and motivational nudges.`
+                imageContainer.innerHTML = `<img src="https://picsum.photos/id/251/600/400" class="w-full h-full object-cover rounded-3xl" alt="">`
+                
+                const t1 = document.createElement('div')
+                t1.className = "text-xs bg-cyan-900 text-cyan-200 px-5 py-3 rounded-3xl"
+                t1.textContent = "Supabase"
+                tagsContainer.append(t1)
+                
+                const t2 = document.createElement('div')
+                t2.className = "text-xs bg-emerald-900 text-emerald-200 px-5 py-3 rounded-3xl"
+                t2.textContent = "Recharts"
+                tagsContainer.append(t2)
+            }
+            
+            modal.classList.remove('hidden')
+            modal.classList.add('flex')
+        }
+        
+        function closeModal() {
+            const modal = document.getElementById('project-modal')
+            modal.classList.add('hidden')
+            modal.classList.remove('flex')
+        }
+        
+        function visitGithub() {
+            const urls = [
+                "https://github.com/Anshika9838",
+                "https://github.com/Anshika9838",
+                "https://github.com/Anshika9838"
+            ]
+            window.open(urls[currentProject - 1], '_blank')
+            closeModal()
+        }
+        
+        // Form handler
+        function handleSubmit(e) {
+            e.preventDefault()
+            
+            const name = document.getElementById('name').value || "Friend"
+            
+            // Simulate sending
+            const btns = document.querySelectorAll('#contact-form button')
+            const originalText = btns[1].textContent
+            btns[1].textContent = "THANK YOU ✨"
+            btns[1].style.backgroundImage = 'none'
+            btns[1].style.backgroundColor = '#10b981'
+            
+            setTimeout(() => {
+                alert(`Thank you, ${name}! Your message has been received. Anshika will get back to you shortly.`)
+                document.getElementById('contact-form').reset()
+                btns[1].textContent = originalText
+                btns[1].style.backgroundImage = 'linear-gradient(to right, rgb(139 92 246), rgb(236 72 153))'
+            }, 1500)
+        }
+        
+        // Copy email
+        function copyEmail() {
+            const email = "anshika9838@gmail.com"
+            navigator.clipboard.writeText(email).then(() => {
+                const orig = document.getElementById('email-text').textContent
+                document.getElementById('email-text').textContent = "COPIED ✓"
+                setTimeout(() => {
+                    document.getElementById('email-text').textContent = orig
+                }, 2000)
+            })
+        }
+        
+        // Keyboard shortcuts
+        function handleKeys(e) {
+            if (e.metaKey && e.key === "k") {
+                e.preventDefault()
+                const modal = document.getElementById('project-modal')
+                if (!modal.classList.contains('hidden')) {
+                    closeModal()
+                } else {
+                    // random project
+                    showProjectDetail(Math.floor(Math.random() * 3) + 1)
+                }
+            }
+        }
+        
+        // Scroll reveal
+        function revealOnScroll() {
+            const sections = document.querySelectorAll('section')
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1
+                        entry.target.style.transform = 'translateY(0)'
+                    }
+                })
+            }, {
+                threshold: 0.15
+            })
+            
+            sections.forEach(section => {
+                section.style.opacity = 0
+                section.style.transform = 'translateY(40px)'
+                section.style.transition = 'all 0.8s cubic-bezier(0.23, 1, 0.32, 1)'
+                observer.observe(section)
+            })
+        }
+        
+        // Avatar hover fun
+        function avatarFun() {
+            const avatar = document.getElementById('avatar-img')
+            if (!avatar) return
+            
+            let tilt = 0
+            avatar.addEventListener('mousemove', (e) => {
+                const rect = avatar.getBoundingClientRect()
+                const x = e.clientX - rect.left
+                const y = e.clientY - rect.top
+                
+                const rotX = (y / rect.height - 0.5) * -25
+                const rotY = (x / rect.width - 0.5) * 25
+                
+                avatar.style.transform = `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg)`
+            })
+            
+            avatar.addEventListener('mouseleave', () => {
+                avatar.style.transform = `perspective(800px) rotateX(0deg) rotateY(0deg)`
+            })
+        }
+        
+        // Initialize everything
+        function initialize() {
+            // Tailwind ready
+            initializeTailwind()
+            
+            // Progress
+            setupProgressBar()
+            
+            // Scroll reveals
+            revealOnScroll()
+            
+            // Keyboard
+            document.addEventListener('keydown', handleKeys)
+            
+            // Avatar
+            avatarFun()
+            
+            // Make sure mobile menu is hidden
+            const mobileMenu = document.getElementById('mobile-menu')
+            if (mobileMenu) mobileMenu.classList.add('hidden')
+            
+            // Demo: make the avatar image always load
+            const avatarImg = document.getElementById('avatar-img')
+            avatarImg.onerror = function() {
+                this.src = 'https://picsum.photos/id/64/400/400'
+            }
+            
+            // Confetti on load (light)
+            setTimeout(() => {
+                console.log('%c👾 Welcome to Anshika\'s portfolio!', 'color:#a5b4fc; font-family:monospace')
+            }, 2100)
+            
+            // Click anywhere on hero to scroll to about
+            const header = document.querySelector('header')
+            if (header) {
+                header.style.cursor = 'pointer'
+                header.addEventListener('click', (e) => {
+                    if (e.target.tagName === "HEADER" || e.target.closest('header')) {
+                        const about = document.getElementById('about')
+                        if (about) about.scrollIntoView({ behavior: "smooth" })
+                    }
+                })
+            }
+            
+            console.log("%cPortfolio ready. Built as a love letter to Anshika's GitHub.", "color:#64748b; font-size:10px")
+        }
+        
+        // Boot app
+        window.onload = initialize
+    </script>
+</body>
+</html>
