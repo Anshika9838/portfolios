@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-public-sans), ui-sans-serif, system-ui, sans-serif;
+
+  --color-bg: #FAF8F4;
+  --color-bg-alt: #F3EFE8;
+  --color-charcoal: #1C1A17;
+  --color-charcoal-dark: #2A2724;
+  --color-stone: #6E675E;
+  --color-faint: #A39B8F;
+  --color-hairline: #E7E2D8;
+  --color-sand: #B3A28C;
+  --color-success: #7A8B6F;
+  --color-error: #B0705C;
+
+  --shadow-soft: 0 1px 2px rgba(28,26,23,.04), 0 12px 32px rgba(28,26,23,.06);
+}
+
+html {
+  background: var(--color-bg);
+  color-scheme: light;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-charcoal);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+html, body {
+  max-width: 100%;
+}
+
+::selection {
+  background: var(--color-sand);
+  color: var(--color-charcoal);
+}
+
+/* Hide native scrollbar aesthetics slightly (still functional, no motion) */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-hairline);
+  border-radius: 999px;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
